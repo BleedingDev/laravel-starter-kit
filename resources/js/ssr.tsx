@@ -1,22 +1,24 @@
-import { createInertiaApp } from '@inertiajs/react';
-import createServer from '@inertiajs/react/server';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import ReactDOMServer from 'react-dom/server';
+import { createInertiaApp } from "@inertiajs/react";
+import createServer from "@inertiajs/react/server";
+import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
+import ReactDOMServer from "react-dom/server";
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
-createServer((page) =>
-    createInertiaApp({
-        page,
-        render: ReactDOMServer.renderToString,
-        title: (title) => (title ? `${title} - ${appName}` : appName),
-        resolve: (name) =>
-            resolvePageComponent(
-                `./pages/${name}.tsx`,
-                import.meta.glob('./pages/**/*.tsx'),
-            ),
-        setup: ({ App, props }) => {
-            return <App {...props} />;
-        },
-    }),
+const resolvePage = (name: string) =>
+  resolvePageComponent(
+    `./pages/${name}.tsx`,
+    import.meta.glob("./pages/**/*.tsx")
+  );
+
+const server = createServer((page) =>
+  createInertiaApp({
+    page,
+    render: ReactDOMServer.renderToString,
+    resolve: resolvePage,
+    setup: ({ App, props }) => <App {...props} />,
+    title: (title) => (title ? `${title} - ${appName}` : appName),
+  })
 );
+
+export default server;

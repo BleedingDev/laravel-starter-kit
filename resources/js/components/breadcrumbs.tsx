@@ -1,49 +1,69 @@
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
-import { Link } from '@inertiajs/react';
-import { Fragment } from 'react';
+import { Link } from "@inertiajs/react";
 
-export function Breadcrumbs({
-    breadcrumbs,
+import type { BreadcrumbItem as BreadcrumbItemType } from "@/types";
+
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+
+export const Breadcrumbs = ({
+  breadcrumbs,
 }: {
-    breadcrumbs: BreadcrumbItemType[];
-}) {
-    return (
-        <>
-            {breadcrumbs.length > 0 && (
-                <Breadcrumb>
-                    <BreadcrumbList>
-                        {breadcrumbs.map((item, index) => {
-                            const isLast = index === breadcrumbs.length - 1;
-                            return (
-                                <Fragment key={index}>
-                                    <BreadcrumbItem>
-                                        {isLast ? (
-                                            <BreadcrumbPage>
-                                                {item.title}
-                                            </BreadcrumbPage>
-                                        ) : (
-                                            <BreadcrumbLink asChild>
-                                                <Link href={item.href}>
-                                                    {item.title}
-                                                </Link>
-                                            </BreadcrumbLink>
-                                        )}
-                                    </BreadcrumbItem>
-                                    {!isLast && <BreadcrumbSeparator />}
-                                </Fragment>
-                            );
-                        })}
-                    </BreadcrumbList>
-                </Breadcrumb>
-            )}
-        </>
-    );
-}
+  breadcrumbs: BreadcrumbItemType[];
+}) => {
+  if (!breadcrumbs.length) {
+    return null;
+  }
+
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        {breadcrumbs.map((item, index) => (
+          <BreadcrumbEntry
+            key={getBreadcrumbKey(item)}
+            item={item}
+            isLast={index === breadcrumbs.length - 1}
+          />
+        ))}
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+};
+
+const BreadcrumbEntry = ({
+  item,
+  isLast,
+}: {
+  item: BreadcrumbItemType;
+  isLast: boolean;
+}) => (
+  <>
+    <BreadcrumbItem>
+      <BreadcrumbEntryLabel item={item} isLast={isLast} />
+    </BreadcrumbItem>
+    {isLast ? null : <BreadcrumbSeparator />}
+  </>
+);
+
+const BreadcrumbEntryLabel = ({
+  item,
+  isLast,
+}: {
+  item: BreadcrumbItemType;
+  isLast: boolean;
+}) =>
+  isLast ? (
+    <BreadcrumbPage>{item.title}</BreadcrumbPage>
+  ) : (
+    <BreadcrumbLink asChild>
+      <Link href={item.href}>{item.title}</Link>
+    </BreadcrumbLink>
+  );
+
+const getBreadcrumbKey = (item: BreadcrumbItemType) =>
+  `${item.title}-${item.href}`;
