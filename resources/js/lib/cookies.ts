@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 interface SetCookieOptions {
   name: string;
   value: string;
@@ -7,7 +9,7 @@ interface SetCookieOptions {
   secure?: boolean;
 }
 
-const canWriteCookies = () =>
+const canWriteCookieStore = () =>
   typeof window !== "undefined" && typeof cookieStore !== "undefined";
 
 const buildCookie = ({
@@ -36,14 +38,47 @@ const buildCookie = ({
   return cookie;
 };
 
+type CookieAttributes = NonNullable<Parameters<typeof Cookies.set>[2]>;
+
+const buildCookieAttributes = ({
+  maxAge,
+  path = "/",
+  sameSite = "lax",
+  secure,
+}: SetCookieOptions): CookieAttributes => {
+  const attributes: CookieAttributes = {
+    path,
+    sameSite,
+  };
+
+  if (typeof maxAge === "number") {
+    attributes.expires = new Date(Date.now() + maxAge * 1000);
+  }
+
+  if (secure !== undefined) {
+    attributes.secure = secure;
+  }
+
+  return attributes;
+};
+
 export const setCookie = async (options: SetCookieOptions) => {
-  if (!canWriteCookies()) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  if (canWriteCookieStore()) {
+    try {
+      await cookieStore.set(buildCookie(options));
+    } catch {
+      // Some browsers or privacy settings can block cookieStore writes.
+    }
     return;
   }
 
   try {
-    await cookieStore.set(buildCookie(options));
+    Cookies.set(options.name, options.value, buildCookieAttributes(options));
   } catch {
-    // Some browsers or privacy settings can block cookieStore writes.
+    // Ignore cookie writes when blocked by browser privacy settings.
   }
 };

@@ -52,16 +52,17 @@ const DeleteUserActions = ({
   processing: boolean;
 }) => (
   <DialogFooter className="gap-2">
-    <DialogClose asChild>
-      <Button variant="secondary" onClick={onCancel}>
-        Cancel
-      </Button>
+    <DialogClose render={<Button variant="secondary" />} onClick={onCancel}>
+      Cancel
     </DialogClose>
 
-    <Button variant="destructive" disabled={processing} asChild>
-      <button type="submit" data-test="confirm-delete-user-button">
-        Delete account
-      </button>
+    <Button
+      type="submit"
+      variant="destructive"
+      disabled={processing}
+      data-test="confirm-delete-user-button"
+    >
+      Delete account
     </Button>
   </DialogFooter>
 );
@@ -97,10 +98,10 @@ const DeleteUserDialog = ({
   passwordInput: RefObject<HTMLInputElement | null>;
 }) => (
   <Dialog>
-    <DialogTrigger asChild>
-      <Button variant="destructive" data-test="delete-user-button">
-        Delete account
-      </Button>
+    <DialogTrigger
+      render={<Button variant="destructive" data-test="delete-user-button" />}
+    >
+      Delete account
     </DialogTrigger>
     <DialogContent>
       <DialogTitle>Are you sure you want to delete your account?</DialogTitle>

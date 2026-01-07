@@ -35,18 +35,21 @@ export const NavFooter = ({
 const NavFooterItem = ({ item }: { item: NavItem }) => (
   <SidebarMenuItem>
     <SidebarMenuButton
-      asChild
       className="text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100"
+      render={(renderProps) => (
+        <a
+          href={getNavHref(item)}
+          target="_blank"
+          rel="noopener noreferrer"
+          {...renderProps}
+        >
+          {renderProps.children}
+        </a>
+      )}
     >
-      <NavFooterLink item={item} />
+      <NavFooterLabel item={item} />
     </SidebarMenuButton>
   </SidebarMenuItem>
-);
-
-const NavFooterLink = ({ item }: { item: NavItem }) => (
-  <a href={getNavHref(item)} target="_blank" rel="noopener noreferrer">
-    <NavFooterLabel item={item} />
-  </a>
 );
 
 const NavFooterLabel = ({ item }: { item: NavItem }) => (

@@ -1,5 +1,5 @@
+import type { IconSvgElement } from "@hugeicons/react";
 import type { InertiaLinkProps } from "@inertiajs/react";
-import type { LucideIcon } from "lucide-react";
 
 export interface Auth {
   user: User;
@@ -18,7 +18,7 @@ export interface NavGroup {
 export interface NavItem {
   title: string;
   href: NonNullable<InertiaLinkProps["href"]>;
-  icon?: LucideIcon | null;
+  icon?: IconSvgElement | null;
   isActive?: boolean;
 }
 

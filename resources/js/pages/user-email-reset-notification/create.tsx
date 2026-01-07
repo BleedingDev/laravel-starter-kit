@@ -1,5 +1,4 @@
 import { Form, Head } from "@inertiajs/react";
-import { LoaderCircle } from "lucide-react";
 
 import UserEmailResetNotification from "@/actions/App/Http/Controllers/UserEmailResetNotification";
 import InputError from "@/components/input-error";
@@ -7,6 +6,7 @@ import TextLink from "@/components/text-link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 import AuthLayout from "@/layouts/auth-layout";
 import { login } from "@/routes";
 
@@ -96,7 +96,7 @@ const SubmitButton = ({ processing }: { processing: boolean }) => (
 
 const SubmitButtonContent = ({ processing }: { processing: boolean }) => (
   <span className="inline-flex items-center gap-2">
-    {processing ? <LoaderCircle className="h-4 w-4 animate-spin" /> : null}
+    {processing ? <Spinner /> : null}
     <span>Email password reset link</span>
   </span>
 );

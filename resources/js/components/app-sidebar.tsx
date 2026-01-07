@@ -1,5 +1,9 @@
+import {
+  BookOpen01Icon,
+  Folder01Icon,
+  LayoutGridIcon,
+} from "@hugeicons/core-free-icons";
 import { Link } from "@inertiajs/react";
-import { BookOpen, Folder, LayoutGrid } from "lucide-react";
 
 import type { NavItem } from "@/types";
 
@@ -22,7 +26,7 @@ import AppLogo from "./app-logo";
 const mainNavItems: NavItem[] = [
   {
     href: dashboard(),
-    icon: LayoutGrid,
+    icon: LayoutGridIcon,
     title: "Dashboard",
   },
 ];
@@ -30,12 +34,12 @@ const mainNavItems: NavItem[] = [
 const footerNavItems: NavItem[] = [
   {
     href: "https://github.com/laravel/react-starter-kit",
-    icon: Folder,
+    icon: Folder01Icon,
     title: "Repository",
   },
   {
     href: "https://laravel.com/docs/starter-kits#react",
-    icon: BookOpen,
+    icon: BookOpen01Icon,
     title: "Documentation",
   },
 ];
@@ -59,10 +63,8 @@ const AppSidebarHeader = () => (
 );
 
 const SidebarLogoLink = () => (
-  <SidebarMenuButton size="lg" asChild>
-    <Link href={dashboard()} prefetch>
-      <AppLogo />
-    </Link>
+  <SidebarMenuButton size="lg" render={<Link href={dashboard()} prefetch />}>
+    <AppLogo />
   </SidebarMenuButton>
 );
 

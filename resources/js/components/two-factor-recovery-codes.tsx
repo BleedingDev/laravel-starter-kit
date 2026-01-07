@@ -1,5 +1,12 @@
+import type { IconSvgElement } from "@hugeicons/react";
+
+import {
+  LockKeyIcon,
+  RefreshIcon,
+  ViewIcon,
+  ViewOffIcon,
+} from "@hugeicons/core-free-icons";
 import { Form } from "@inertiajs/react";
-import { Eye, EyeOff, LockKeyhole, RefreshCw } from "lucide-react";
 import {
   useCallback,
   useEffect,
@@ -8,6 +15,7 @@ import {
   type RefObject,
 } from "react";
 
+import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -63,7 +71,7 @@ const TwoFactorRecoveryCodes = ({
     }
   }, [recoveryCodesList.length, fetchRecoveryCodes]);
 
-  const RecoveryCodeIconComponent = codesAreVisible ? EyeOff : Eye;
+  const RecoveryCodeIconComponent = codesAreVisible ? ViewOffIcon : ViewIcon;
 
   return (
     <Card>
@@ -91,7 +99,7 @@ export default TwoFactorRecoveryCodes;
 const RecoveryCodesHeader = () => (
   <CardHeader>
     <CardTitle className="flex gap-3">
-      <LockKeyhole className="size-4" aria-hidden="true" />
+      <Icon iconNode={LockKeyIcon} className="size-4" aria-hidden="true" />
       2FA Recovery Codes
     </CardTitle>
     <CardDescription>
@@ -112,7 +120,7 @@ const RecoveryCodesActions = ({
   canRegenerateCodes: boolean;
   fetchRecoveryCodes: () => Promise<void>;
   onToggleVisibility: () => Promise<void>;
-  IconComponent: typeof Eye;
+  IconComponent: IconSvgElement;
 }) => (
   <div className="flex flex-col gap-3 select-none sm:flex-row sm:items-center sm:justify-between">
     <Button
@@ -122,7 +130,7 @@ const RecoveryCodesActions = ({
       aria-expanded={codesAreVisible}
       aria-controls="recovery-codes-section"
     >
-      <IconComponent className="size-4" aria-hidden="true" />
+      <Icon iconNode={IconComponent} className="size-4" aria-hidden="true" />
       {codesAreVisible ? "Hide" : "View"} Recovery Codes
     </Button>
     {canRegenerateCodes ? (
@@ -148,7 +156,7 @@ const RecoveryCodesRegenerate = ({
         disabled={processing}
         aria-describedby="regenerate-warning"
       >
-        <RefreshCw /> Regenerate Codes
+        <Icon iconNode={RefreshIcon} className="mr-2" /> Regenerate Codes
       </Button>
     )}
   </Form>

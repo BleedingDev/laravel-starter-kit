@@ -1,7 +1,13 @@
+import type { IconSvgElement } from "@hugeicons/react";
 import type { HTMLAttributes } from "react";
 
-import { Monitor, Moon, Sun, type LucideIcon } from "lucide-react";
+import {
+  ComputerIcon,
+  Moon01Icon,
+  Sun01Icon,
+} from "@hugeicons/core-free-icons";
 
+import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -18,9 +24,9 @@ const AppearanceToggleDropdown = ({
   const { appearance, updateAppearance } = useAppearance();
 
   const options = [
-    { icon: Sun, label: "Light", value: "light" },
-    { icon: Moon, label: "Dark", value: "dark" },
-    { icon: Monitor, label: "System", value: "system" },
+    { icon: Sun01Icon, label: "Light", value: "light" },
+    { icon: Moon01Icon, label: "Dark", value: "dark" },
+    { icon: ComputerIcon, label: "System", value: "system" },
   ] as const;
 
   const currentIcon = getAppearanceIcon(appearance);
@@ -28,11 +34,17 @@ const AppearanceToggleDropdown = ({
   return (
     <div className={className} {...props}>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" className="h-9 w-9 rounded-md">
-            {currentIcon}
-            <span className="sr-only">Toggle theme</span>
-          </Button>
+        <DropdownMenuTrigger
+          render={
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9 rounded-md"
+            />
+          }
+        >
+          {currentIcon}
+          <span className="sr-only">Toggle theme</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           {options.map((option) => (
@@ -52,30 +64,30 @@ const AppearanceToggleDropdown = ({
 export default AppearanceToggleDropdown;
 
 const AppearanceOption = ({
-  icon: Icon,
+  icon,
   label,
   value,
   onSelect,
 }: {
-  icon: LucideIcon;
+  icon: IconSvgElement;
   label: string;
   value: "light" | "dark" | "system";
   onSelect: (value: "light" | "dark" | "system") => void;
 }) => (
   <DropdownMenuItem onClick={() => onSelect(value)}>
-    <AppearanceOptionLabel Icon={Icon} label={label} />
+    <AppearanceOptionLabel icon={icon} label={label} />
   </DropdownMenuItem>
 );
 
 const AppearanceOptionLabel = ({
-  Icon,
+  icon,
   label,
 }: {
-  Icon: LucideIcon;
+  icon: IconSvgElement;
   label: string;
 }) => (
   <span className="flex items-center gap-2">
-    <Icon className="h-5 w-5" />
+    <Icon iconNode={icon} className="h-5 w-5" />
     <span>{label}</span>
   </span>
 );
@@ -83,13 +95,13 @@ const AppearanceOptionLabel = ({
 const getAppearanceIcon = (appearance: "light" | "dark" | "system") => {
   switch (appearance) {
     case "dark": {
-      return <Moon className="h-5 w-5" />;
+      return <Icon iconNode={Moon01Icon} className="h-5 w-5" />;
     }
     case "light": {
-      return <Sun className="h-5 w-5" />;
+      return <Icon iconNode={Sun01Icon} className="h-5 w-5" />;
     }
     default: {
-      return <Monitor className="h-5 w-5" />;
+      return <Icon iconNode={ComputerIcon} className="h-5 w-5" />;
     }
   }
 };

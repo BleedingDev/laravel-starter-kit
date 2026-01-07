@@ -4,6 +4,7 @@
     "./node_modules/ultracite/config/oxlint/core/.oxlintrc.json",
     "./node_modules/ultracite/config/oxlint/react/.oxlintrc.json"
   ],
+  "ignorePatterns": [".codex/**"],
   "rules": {
     "react/jsx-max-depth": ["error", { "max": 4 }],
     "sort-imports": "off",
@@ -15,6 +16,15 @@
     "react_perf/jsx-no-jsx-as-prop": "off"
   },
   "overrides": [
+    {
+      "files": ["resources/js/components/ui/**/*.{ts,tsx}"],
+      "rules": {
+        "func-style": "off",
+        "jsx-a11y/label-has-associated-control": "off",
+        "no-nested-ternary": "off",
+        "sort-keys": "off"
+      }
+    },
     {
       "files": ["**/*.d.ts"],
       "rules": {

@@ -1,8 +1,9 @@
+import { ArrowUpDownIcon } from "@hugeicons/core-free-icons";
 import { usePage } from "@inertiajs/react";
-import { ChevronsUpDown } from "lucide-react";
 
 import type { SharedData } from "@/types";
 
+import { Icon } from "@/components/icon";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -63,19 +64,17 @@ const NavUserDropdown = ({
 );
 
 const NavUserTrigger = ({ user }: { user: SharedData["auth"]["user"] }) => (
-  <DropdownMenuTrigger asChild>
-    <NavUserButton user={user} />
-  </DropdownMenuTrigger>
-);
-
-const NavUserButton = ({ user }: { user: SharedData["auth"]["user"] }) => (
-  <SidebarMenuButton
-    size="lg"
-    className="group text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent"
-    data-test="sidebar-menu-button"
+  <DropdownMenuTrigger
+    render={
+      <SidebarMenuButton
+        size="lg"
+        className="group text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent"
+        data-test="sidebar-menu-button"
+      />
+    }
   >
     <NavUserButtonContent user={user} />
-  </SidebarMenuButton>
+  </DropdownMenuTrigger>
 );
 
 const NavUserButtonContent = ({
@@ -85,7 +84,7 @@ const NavUserButtonContent = ({
 }) => (
   <span className="flex w-full items-center gap-2">
     <UserInfo user={user} />
-    <ChevronsUpDown className="ml-auto size-4" />
+    <Icon iconNode={ArrowUpDownIcon} className="ml-auto size-4" />
   </span>
 );
 

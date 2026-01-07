@@ -1,5 +1,11 @@
+import {
+  BookOpen01Icon,
+  Folder01Icon,
+  LayoutGridIcon,
+  Menu01Icon,
+  Search01Icon,
+} from "@hugeicons/core-free-icons";
 import { Link, usePage } from "@inertiajs/react";
-import { BookOpen, Folder, LayoutGrid, Menu, Search } from "lucide-react";
 
 import type { BreadcrumbItem, NavItem, SharedData } from "@/types";
 
@@ -42,7 +48,7 @@ import AppLogoIcon from "./app-logo-icon";
 const mainNavItems: NavItem[] = [
   {
     href: dashboard(),
-    icon: LayoutGrid,
+    icon: LayoutGridIcon,
     title: "Dashboard",
   },
 ];
@@ -50,12 +56,12 @@ const mainNavItems: NavItem[] = [
 const rightNavItems: NavItem[] = [
   {
     href: "https://github.com/laravel/react-starter-kit",
-    icon: Folder,
+    icon: Folder01Icon,
     title: "Repository",
   },
   {
     href: "https://laravel.com/docs/starter-kits#react",
-    icon: BookOpen,
+    icon: BookOpen01Icon,
     title: "Documentation",
   },
 ];
@@ -101,8 +107,16 @@ const AppLogoLink = () => (
 const MobileNav = () => (
   <div className="lg:hidden">
     <Sheet>
-      <SheetTrigger asChild>
-        <MobileNavTrigger />
+      <SheetTrigger
+        render={
+          <Button
+            variant="ghost"
+            size="icon"
+            className="mr-2 h-[34px] w-[34px]"
+          />
+        }
+      >
+        <Icon iconNode={Menu01Icon} className="h-5 w-5" />
       </SheetTrigger>
       <SheetContent
         side="left"
@@ -116,12 +130,6 @@ const MobileNav = () => (
       </SheetContent>
     </Sheet>
   </div>
-);
-
-const MobileNavTrigger = () => (
-  <Button variant="ghost" size="icon" className="mr-2 h-[34px] w-[34px]">
-    <Menu className="h-5 w-5" />
-  </Button>
 );
 
 const MobileNavContent = () => (
@@ -265,7 +273,10 @@ const HeaderActions = ({
 
 const SearchButton = () => (
   <Button variant="ghost" size="icon" className="group h-9 w-9 cursor-pointer">
-    <Search className="!size-5 opacity-80 group-hover:opacity-100" />
+    <Icon
+      iconNode={Search01Icon}
+      className="!size-5 opacity-80 group-hover:opacity-100"
+    />
   </Button>
 );
 
@@ -278,7 +289,7 @@ const RightNavLinks = () => (
 );
 
 const RightNavTooltipLink = ({ item }: { item: NavItem }) => (
-  <TooltipProvider delayDuration={0}>
+  <TooltipProvider delay={0}>
     <Tooltip>
       <TooltipTrigger>
         <RightNavIconLink item={item} />
@@ -315,30 +326,20 @@ const UserMenu = ({
   getInitials: (name: string) => string;
 }) => (
   <DropdownMenu>
-    <DropdownMenuTrigger asChild>
-      <UserMenuTrigger auth={auth} getInitials={getInitials} />
+    <DropdownMenuTrigger
+      render={<Button variant="ghost" className="size-10 rounded-full p-1" />}
+    >
+      <Avatar className="size-8 overflow-hidden rounded-full">
+        <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
+        <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+          {getInitials(auth.user.name)}
+        </AvatarFallback>
+      </Avatar>
     </DropdownMenuTrigger>
     <DropdownMenuContent className="w-56" align="end">
       <UserMenuContent user={auth.user} />
     </DropdownMenuContent>
   </DropdownMenu>
-);
-
-const UserMenuTrigger = ({
-  auth,
-  getInitials,
-}: {
-  auth: SharedData["auth"];
-  getInitials: (name: string) => string;
-}) => (
-  <Button variant="ghost" className="size-10 rounded-full p-1">
-    <Avatar className="size-8 overflow-hidden rounded-full">
-      <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
-      <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-        {getInitials(auth.user.name)}
-      </AvatarFallback>
-    </Avatar>
-  </Button>
 );
 
 const BreadcrumbRow = ({ breadcrumbs }: { breadcrumbs: BreadcrumbItem[] }) =>

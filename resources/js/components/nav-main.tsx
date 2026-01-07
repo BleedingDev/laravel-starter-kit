@@ -2,6 +2,7 @@ import { Link, usePage } from "@inertiajs/react";
 
 import type { NavItem } from "@/types";
 
+import { Icon } from "@/components/icon";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -34,24 +35,18 @@ const NavMainItem = ({
 }) => (
   <SidebarMenuItem>
     <SidebarMenuButton
-      asChild
       isActive={isNavItemActive(item, currentPath)}
       tooltip={{ children: item.title }}
+      render={<Link href={item.href} prefetch />}
     >
-      <NavMainLink item={item} />
+      <NavMainLabel item={item} />
     </SidebarMenuButton>
   </SidebarMenuItem>
 );
 
-const NavMainLink = ({ item }: { item: NavItem }) => (
-  <Link href={item.href} prefetch>
-    <NavMainLabel item={item} />
-  </Link>
-);
-
 const NavMainLabel = ({ item }: { item: NavItem }) => (
   <span className="flex items-center gap-2">
-    {item.icon ? <item.icon /> : null}
+    {item.icon ? <Icon iconNode={item.icon} className="size-4" /> : null}
     <span>{item.title}</span>
   </span>
 );

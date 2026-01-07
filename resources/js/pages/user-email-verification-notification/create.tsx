@@ -1,9 +1,9 @@
 import { Form, Head } from "@inertiajs/react";
-import { LoaderCircle } from "lucide-react";
 
 import UserEmailVerificationNotificationController from "@/actions/App/Http/Controllers/UserEmailVerificationNotificationController";
 import TextLink from "@/components/text-link";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import AuthLayout from "@/layouts/auth-layout";
 import { logout } from "@/routes";
 
@@ -61,7 +61,7 @@ const ResendButton = ({ processing }: { processing: boolean }) => (
 
 const ResendButtonContent = ({ processing }: { processing: boolean }) => (
   <span className="inline-flex items-center gap-2">
-    {processing ? <LoaderCircle className="h-4 w-4 animate-spin" /> : null}
+    {processing ? <Spinner /> : null}
     <span>Resend verification email</span>
   </span>
 );

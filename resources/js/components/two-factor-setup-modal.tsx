@@ -1,6 +1,11 @@
+import {
+  Copy01Icon,
+  QrCodeScanIcon,
+  Tick02Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 import { Form } from "@inertiajs/react";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
-import { Check, Copy, Loader2, ScanLine } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import InputError from "@/components/input-error";
@@ -17,6 +22,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { Spinner } from "@/components/ui/spinner";
 import { useClipboard } from "@/hooks/use-clipboard";
 import { OTP_MAX_LENGTH } from "@/hooks/use-two-factor-auth";
 import { confirm } from "@/routes/two-factor";
@@ -50,7 +56,11 @@ const GridScanIcon = () => (
           />
         ))}
       </div>
-      <ScanLine className="relative z-20 size-6 text-foreground" />
+      <HugeiconsIcon
+        icon={QrCodeScanIcon}
+        strokeWidth={2}
+        className="relative z-20 size-6 text-foreground"
+      />
     </div>
   </div>
 );
@@ -66,7 +76,7 @@ const QrCodePanel = ({ qrCodeSvg }: { qrCodeSvg: string | null }) => (
             className="h-full w-full"
           />
         ) : (
-          <Loader2 className="flex size-4 animate-spin" />
+          <Spinner />
         )}
       </div>
     </div>
@@ -98,7 +108,7 @@ const ManualSetupDivider = () => (
 
 const ManualSetupKeyLoading = () => (
   <div className="flex h-full w-full items-center justify-center bg-muted p-3">
-    <Loader2 className="size-4 animate-spin" />
+    <Spinner />
   </div>
 );
 
@@ -109,7 +119,7 @@ const ManualSetupKeyInput = ({
 }: {
   manualSetupKey: string;
   onCopy: (value: string) => void;
-  IconComponent: typeof Check;
+  IconComponent: IconSvgElement;
 }) => (
   <>
     <input
@@ -123,7 +133,7 @@ const ManualSetupKeyInput = ({
       onClick={() => onCopy(manualSetupKey)}
       className="border-l border-border px-3 hover:bg-muted"
     >
-      <IconComponent className="w-4" />
+      <HugeiconsIcon icon={IconComponent} strokeWidth={2} className="w-4" />
     </button>
   </>
 );
@@ -135,7 +145,7 @@ const ManualSetupKeyPanel = ({
 }: {
   manualSetupKey: string | null;
   onCopy: (value: string) => void;
-  IconComponent: typeof Check;
+  IconComponent: IconSvgElement;
 }) => (
   <div className="flex w-full space-x-2">
     <div className="flex w-full items-stretch overflow-hidden rounded-xl border border-border">
@@ -166,7 +176,7 @@ const TwoFactorSetupStep = ({
   errors: string[];
 }) => {
   const [copiedText, copy] = useClipboard();
-  const IconComponent = copiedText === manualSetupKey ? Check : Copy;
+  const IconComponent = copiedText === manualSetupKey ? Tick02Icon : Copy01Icon;
 
   if (errors?.length) {
     return <AlertError errors={errors} />;

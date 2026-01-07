@@ -5,6 +5,7 @@ import { Link } from "@inertiajs/react";
 import type { NavItem } from "@/types";
 
 import Heading from "@/components/heading";
+import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
@@ -99,25 +100,19 @@ const SettingsNavItem = ({
     <Button
       size="sm"
       variant="ghost"
-      asChild
       className={cn("w-full justify-start", {
         "bg-muted": currentPath === hrefValue,
       })}
+      render={<Link href={item.href} />}
     >
-      <SettingsNavLink item={item} />
+      <SettingsNavLabel item={item} />
     </Button>
   );
 };
 
-const SettingsNavLink = ({ item }: { item: NavItem }) => (
-  <Link href={item.href}>
-    <SettingsNavLabel item={item} />
-  </Link>
-);
-
 const SettingsNavLabel = ({ item }: { item: NavItem }) => (
   <span className="flex items-center gap-2">
-    {item.icon ? <item.icon className="h-4 w-4" /> : null}
+    {item.icon ? <Icon iconNode={item.icon} className="h-4 w-4" /> : null}
     {item.title}
   </span>
 );

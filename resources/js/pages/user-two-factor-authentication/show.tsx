@@ -1,10 +1,11 @@
+import { Shield01Icon, Shield02Icon } from "@hugeicons/core-free-icons";
 import { Form, Head } from "@inertiajs/react";
-import { ShieldBan, ShieldCheck } from "lucide-react";
 import { useCallback, useState } from "react";
 
 import type { BreadcrumbItem } from "@/types";
 
 import HeadingSmall from "@/components/heading-small";
+import { Icon } from "@/components/icon";
 import TwoFactorRecoveryCodes from "@/components/two-factor-recovery-codes";
 import TwoFactorSetupModal from "@/components/two-factor-setup-modal";
 import { Badge } from "@/components/ui/badge";
@@ -222,7 +223,7 @@ const DisableButton = ({ processing }: { processing: boolean }) => (
 
 const DisableButtonContent = () => (
   <span className="inline-flex items-center gap-2">
-    <ShieldBan />
+    <Icon iconNode={Shield02Icon} />
     <span>Disable 2FA</span>
   </span>
 );
@@ -266,7 +267,7 @@ const ContinueSetupButton = ({ onClick }: { onClick: () => void }) => (
 
 const ContinueSetupButtonContent = () => (
   <span className="inline-flex items-center gap-2">
-    <ShieldCheck />
+    <Icon iconNode={Shield01Icon} />
     <span>Continue Setup</span>
   </span>
 );
@@ -285,7 +286,7 @@ const EnableButton = ({ processing }: { processing: boolean }) => (
 
 const EnableButtonContent = () => (
   <span className="inline-flex items-center gap-2">
-    <ShieldCheck />
+    <Icon iconNode={Shield01Icon} />
     <span>Enable 2FA</span>
   </span>
 );
