@@ -8,6 +8,12 @@ arch()->preset()->security()->ignoring([
     'assert',
 ]);
 
+arch('actions')
+    ->expect('App\\Actions')
+    ->toBeFinal()
+    ->toBeReadonly()
+    ->toHaveMethod('handle');
+
 arch('controllers')
     ->expect('App\Http\Controllers')
     ->not->toBeUsed();
