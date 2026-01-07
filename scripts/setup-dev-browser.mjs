@@ -20,7 +20,7 @@ if (fs.existsSync(dest)) {
     log("Re-run with --force to reinstall.");
     process.exit(0);
   }
-  fs.rmSync(dest, { recursive: true, force: true });
+  fs.rmSync(dest, { force: true, recursive: true });
 }
 
 try {

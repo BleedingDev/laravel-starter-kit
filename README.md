@@ -65,6 +65,23 @@ npm install playwright
 npx playwright install
 ```
 
+### Optional: Codex dev-browser Skill (UI Validation)
+
+This repo can install the dev-browser Codex skill (cross‑platform) for automated UI validation and screenshots.
+
+```bash
+# Installs to $CODEX_HOME/skills/dev-browser (defaults to ~/.codex)
+npm run setup:dev-browser
+```
+
+To update/reinstall later:
+
+```bash
+npm run setup:dev-browser -- --force
+```
+
+The installer fetches the latest dev-browser from upstream and copies only the `skills/dev-browser` folder. Restart Codex after installation so the skill is picked up.
+
 ### Verify Installation
 
 Run the test suite to ensure everything is configured correctly:
