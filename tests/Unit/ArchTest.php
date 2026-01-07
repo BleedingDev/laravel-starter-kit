@@ -61,6 +61,21 @@ arch('models usage')
         'Tests',
     ]);
 
+arch('suspicious characters')
+    ->expect('App')
+    ->not->toHaveSuspiciousCharacters();
+
+arch('dynamic invocation helpers')
+    ->expect('App')
+    ->not->toUse([
+        'eval',
+        'call_user_func',
+        'call_user_func_array',
+        'forward_static_call',
+        'forward_static_call_array',
+        'create_function',
+    ]);
+
 arch('controllers')
     ->expect('App\Http\Controllers')
     ->not->toBeUsed();
