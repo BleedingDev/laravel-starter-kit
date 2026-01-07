@@ -32,6 +32,35 @@ arch('debug helpers')
         'print_r',
     ]);
 
+arch('actions should not touch http')
+    ->expect('App\\Actions')
+    ->not->toUse('Illuminate\\Http')
+    ->not->toUse([
+        'request',
+        'auth',
+        'session',
+        'redirect',
+        'back',
+        'response',
+    ]);
+
+arch('actions size')
+    ->expect('App\\Actions')
+    ->toHaveLineCountLessThan(200);
+
+arch('controllers size')
+    ->expect('App\\Http\\Controllers')
+    ->toHaveLineCountLessThan(200);
+
+arch('models usage')
+    ->expect('App\\Models')
+    ->toOnlyBeUsedIn([
+        'App\\Actions',
+        'App\\Http',
+        'Database',
+        'Tests',
+    ]);
+
 arch('controllers')
     ->expect('App\Http\Controllers')
     ->not->toBeUsed();
