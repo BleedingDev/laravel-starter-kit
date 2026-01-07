@@ -14,6 +14,10 @@ arch('actions')
     ->toBeReadonly()
     ->toHaveMethod('handle');
 
+arch('form requests')
+    ->expect('App\\Http\\Requests')
+    ->toExtend('Illuminate\\Foundation\\Http\\FormRequest');
+
 arch('controllers')
     ->expect('App\Http\Controllers')
     ->not->toBeUsed();
