@@ -40,7 +40,7 @@
 ### 4) Run Prettier on the entire repo (not just resources)
 
 **Why:** Prettier currently only runs on `resources/` and ignores shadcn UI components. Config files are only ESLinted (and Prettier rules are disabled in ESLint).
-**Current state:** `npm run lint` runs `prettier --write resources/`.
+**Current state:** `pnpm run lint` runs `prettier --write resources/`.
 **Change:** use `prettier --write .` and rely on `.prettierignore` for shadcn and mail views.
 **Trade-off:** may reformat config files and scripts; ensure ignore list is correct.
 
@@ -86,7 +86,7 @@
 ### 9) Add pre-commit hooks (lint + tests)
 
 **Why:** reduce CI failures and keep the repo consistently formatted.
-**Change:** add `husky` + `lint-staged` to run `npm run test:lint` and `composer test:lint` on staged files.
+**Change:** add `husky` + `lint-staged` to run `pnpm run test:lint` and `composer test:lint` on staged files.
 **Trade-off:** slower commits; but higher consistency.
 
 ### 10) Keep CI strict but fast
@@ -94,7 +94,7 @@
 **Why:** this repo already has strict CI; tune for speed without dropping checks.
 **Change ideas:**
 
-- Cache Node modules or use `npm ci` + caching.
+- Cache Node modules or use `pnpm install --frozen-lockfile` + caching.
 - Cache `vendor` via composer cache or `composer install --prefer-dist` (already used).
 - Confirm Playwright cache behavior to avoid redundant installs.
 
