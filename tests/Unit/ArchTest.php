@@ -8,6 +8,10 @@ arch()->preset()->security()->ignoring([
     'assert',
 ]);
 
+arch('strict types')
+    ->expect('App')
+    ->toUseStrictTypes();
+
 arch('actions')
     ->expect('App\\Actions')
     ->toBeFinal()
