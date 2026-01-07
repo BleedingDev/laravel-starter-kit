@@ -1,6 +1,6 @@
 import { Shield01Icon, Shield02Icon } from "@hugeicons/core-free-icons";
 import { Form, Head } from "@inertiajs/react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 import type { BreadcrumbItem } from "@/types";
 
@@ -53,12 +53,12 @@ const TwoFactor = ({ twoFactorEnabled = false }: TwoFactorProps) => {
     errors,
   } = useTwoFactorAuth();
   const [showSetupModal, setShowSetupModal] = useState(false);
-  const openSetupModal = useCallback(() => {
+  const openSetupModal = () => {
     setShowSetupModal(true);
-  }, []);
-  const closeSetupModal = useCallback(() => {
+  };
+  const closeSetupModal = () => {
     setShowSetupModal(false);
-  }, []);
+  };
 
   return (
     <AppLayout breadcrumbs={breadcrumbs}>

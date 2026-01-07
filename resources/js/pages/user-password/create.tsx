@@ -1,5 +1,4 @@
 import { Form, Head } from "@inertiajs/react";
-import { useCallback } from "react";
 
 import UserPasswordController from "@/actions/App/Http/Controllers/UserPasswordController";
 import InputError from "@/components/input-error";
@@ -15,10 +14,11 @@ interface ResetPasswordProps {
 }
 
 const ResetPassword = ({ token, email }: ResetPasswordProps) => {
-  const transformData = useCallback(
-    (data: Record<string, unknown>) => ({ ...data, email, token }),
-    [email, token]
-  );
+  const transformData = (data: Record<string, unknown>) => ({
+    ...data,
+    email,
+    token,
+  });
 
   return (
     <AuthLayout

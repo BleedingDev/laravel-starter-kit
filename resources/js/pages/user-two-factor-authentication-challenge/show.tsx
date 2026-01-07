@@ -1,6 +1,6 @@
 import { Form, Head } from "@inertiajs/react";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import InputError from "@/components/input-error";
 import { Button } from "@/components/ui/button";
@@ -37,27 +37,19 @@ const Show = () => {
   const [showRecoveryInput, setShowRecoveryInput] = useState<boolean>(false);
   const [code, setCode] = useState<string>("");
 
-  const authConfigContent = useMemo<{
-    title: string;
-    description: string;
-    toggleText: string;
-  }>(() => {
-    if (showRecoveryInput) {
-      return {
+  const authConfigContent = showRecoveryInput
+    ? {
         description:
           "Please confirm access to your account by entering one of your emergency recovery codes.",
         title: "Recovery Code",
         toggleText: "login using an authentication code",
+      }
+    : {
+        description:
+          "Enter the authentication code provided by your authenticator application.",
+        title: "Authentication Code",
+        toggleText: "login using a recovery code",
       };
-    }
-
-    return {
-      description:
-        "Enter the authentication code provided by your authenticator application.",
-      title: "Authentication Code",
-      toggleText: "login using a recovery code",
-    };
-  }, [showRecoveryInput]);
 
   const toggleRecoveryMode = (clearErrors: () => void): void => {
     setShowRecoveryInput((value) => !value);

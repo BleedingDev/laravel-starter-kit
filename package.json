@@ -7,7 +7,8 @@
     "dev": "vite",
     "lint": "ultracite fix",
     "test:lint": "ultracite check",
-    "test:types": "tsc --noEmit"
+    "test:types": "tsc --noEmit",
+    "setup:dev-browser": "node scripts/setup-dev-browser.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.0.0",

@@ -7,13 +7,7 @@ import {
   ViewOffIcon,
 } from "@hugeicons/core-free-icons";
 import { Form } from "@inertiajs/react";
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type RefObject,
-} from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 
 import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
@@ -48,7 +42,7 @@ const TwoFactorRecoveryCodes = ({
   const codesSectionRef = useRef<HTMLDivElement | null>(null);
   const canRegenerateCodes = recoveryCodesList.length > 0 && codesAreVisible;
 
-  const toggleCodesVisibility = useCallback(async () => {
+  const toggleCodesVisibility = async () => {
     if (!codesAreVisible && !recoveryCodesList.length) {
       await fetchRecoveryCodes();
     }
@@ -63,7 +57,7 @@ const TwoFactorRecoveryCodes = ({
         });
       });
     }
-  }, [codesAreVisible, recoveryCodesList.length, fetchRecoveryCodes]);
+  };
 
   useEffect(() => {
     if (!recoveryCodesList.length) {

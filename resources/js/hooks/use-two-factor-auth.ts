@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { qrCode, recoveryCodes, secretKey } from "@/routes/two-factor";
 
@@ -110,10 +110,7 @@ const useTwoFactorSetupDataState = () => {
   const [qrCodeSvg, setQrCodeSvg] = useState<string | null>(null);
   const [manualSetupKey, setManualSetupKey] = useState<string | null>(null);
 
-  const hasSetupData = useMemo<boolean>(
-    () => qrCodeSvg !== null && manualSetupKey !== null,
-    [qrCodeSvg, manualSetupKey]
-  );
+  const hasSetupData = qrCodeSvg !== null && manualSetupKey !== null;
 
   return {
     hasSetupData,
