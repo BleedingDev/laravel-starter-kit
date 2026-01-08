@@ -30,7 +30,10 @@ final class User extends Authenticatable implements MustVerifyEmail
     /**
      * @use HasFactory<UserFactory>
      */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable;
+    use HasFactory;
+
+    use Notifiable;
+    use TwoFactorAuthenticatable;
 
     /**
      * @var list<string>
@@ -43,22 +46,19 @@ final class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    public function casts(): array
-    {
-        return [
-            'id' => 'integer',
-            'name' => 'string',
-            'email' => 'string',
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'remember_token' => 'string',
-            'two_factor_secret' => 'string',
-            'two_factor_recovery_codes' => 'string',
-            'two_factor_confirmed_at' => 'datetime',
-            'created_at' => 'datetime',
-            'updated_at' => 'datetime',
-        ];
-    }
+    protected $casts = [
+        'id' => 'integer',
+        'name' => 'string',
+        'email' => 'string',
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'remember_token' => 'string',
+        'two_factor_secret' => 'string',
+        'two_factor_recovery_codes' => 'string',
+        'two_factor_confirmed_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 }

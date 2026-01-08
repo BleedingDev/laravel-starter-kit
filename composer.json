@@ -90,7 +90,7 @@
       "rector --dry-run",
       "pnpm run test:lint"
     ],
-    "test:unit": "pest --parallel --coverage --exactly=100.0",
+    "test:unit": "XDEBUG_MODE=coverage php vendor/bin/pest --parallel --coverage --exactly=100.0",
     "test:types": [
       "phpstan",
       "pnpm run test:types"

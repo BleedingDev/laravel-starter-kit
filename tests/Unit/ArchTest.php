@@ -4,23 +4,19 @@ declare(strict_types=1);
 
 arch()->preset()->php();
 arch()->preset()->strict();
+arch()->preset()->laravel();
 arch()->preset()->security()->ignoring([
     'assert',
 ]);
 
-arch('strict types')
-    ->expect('App')
-    ->toUseStrictTypes();
-
 arch('actions')
     ->expect('App\\Actions')
-    ->toBeFinal()
     ->toBeReadonly()
     ->toHaveMethod('handle');
 
 arch('form requests')
     ->expect('App\\Http\\Requests')
-    ->toExtend('Illuminate\\Foundation\\Http\\FormRequest');
+    ->toExtend(Illuminate\Foundation\Http\FormRequest::class);
 
 arch('debug helpers')
     ->expect('App')
@@ -28,7 +24,6 @@ arch('debug helpers')
         'dd',
         'dump',
         'ray',
-        'var_dump',
         'print_r',
     ]);
 
@@ -68,16 +63,11 @@ arch('suspicious characters')
 arch('dynamic invocation helpers')
     ->expect('App')
     ->not->toUse([
-        'eval',
         'call_user_func',
         'call_user_func_array',
         'forward_static_call',
         'forward_static_call_array',
         'create_function',
     ]);
-
-arch('controllers')
-    ->expect('App\Http\Controllers')
-    ->not->toBeUsed();
 
 //

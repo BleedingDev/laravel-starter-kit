@@ -1,6 +1,6 @@
 import { Form, Head } from "@inertiajs/react";
 
-import UserEmailResetNotification from "@/actions/App/Http/Controllers/UserEmailResetNotification";
+import UserEmailResetNotificationController from "@/actions/App/Http/Controllers/UserEmailResetNotificationController";
 import InputError from "@/components/input-error";
 import TextLink from "@/components/text-link";
 import { Button } from "@/components/ui/button";
@@ -46,7 +46,7 @@ const StatusMessage = ({ status }: ForgotPasswordProps) =>
   ) : null;
 
 const ResetForm = () => (
-  <Form {...UserEmailResetNotification.store.form()}>
+  <Form {...UserEmailResetNotificationController.store.form()}>
     {({ processing, errors }) => (
       <ResetRequestFields errors={errors} processing={processing} />
     )}

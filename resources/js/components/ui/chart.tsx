@@ -1,3 +1,10 @@
+import type {
+  DefaultLegendContentProps,
+  DefaultTooltipContentProps,
+  TooltipContentProps,
+  TooltipProps,
+} from "recharts";
+
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 
@@ -6,10 +13,19 @@ import { cn } from "@/lib/utils";
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { dark: ".dark", light: "" } as const;
 
-type TooltipProps = React.ComponentProps<typeof RechartsPrimitive.Tooltip>;
-type TooltipPayload = NonNullable<TooltipProps["payload"]>;
+type ValueType = number | string | ReadonlyArray<number | string>;
+type NameType = number | string;
+
+type RechartsTooltipProps = TooltipProps<ValueType, NameType>;
+type TooltipPayload = NonNullable<
+  DefaultTooltipContentProps<ValueType, NameType>["payload"]
+>;
 type TooltipPayloadItem = TooltipPayload[number];
-type TooltipFormatter = TooltipProps["formatter"];
+type TooltipFormatter = RechartsTooltipProps["formatter"];
+type ChartTooltipContentProps = Omit<
+  TooltipContentProps<ValueType, NameType>,
+  "payload"
+> & { payload?: TooltipPayload };
 
 export type ChartConfig = {
   [k in string]: {
@@ -120,7 +136,7 @@ const getTooltipLabelValue = ({
   payload,
 }: {
   config: ChartConfig;
-  label: TooltipProps["label"];
+  label: ChartTooltipContentProps["label"];
   labelKey?: string;
   payload: TooltipPayload;
 }) => {
@@ -142,7 +158,7 @@ const renderTooltipLabel = ({
   payload,
 }: {
   value?: React.ReactNode;
-  labelFormatter: TooltipProps["labelFormatter"];
+  labelFormatter: RechartsTooltipProps["labelFormatter"];
   labelClassName?: string;
   payload: TooltipPayload;
 }) => {
@@ -173,8 +189,8 @@ const resolveTooltipLabel = ({
   config: ChartConfig;
   hideLabel: boolean;
   payload: TooltipPayload | undefined;
-  label: TooltipProps["label"];
-  labelFormatter: TooltipProps["labelFormatter"];
+  label: ChartTooltipContentProps["label"];
+  labelFormatter: RechartsTooltipProps["labelFormatter"];
   labelClassName?: string;
   labelKey?: string;
 }) => {
@@ -211,7 +227,7 @@ function ChartTooltipContent({
   color,
   nameKey,
   labelKey,
-}: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
+}: ChartTooltipContentProps &
   React.ComponentProps<"div"> & {
     hideLabel?: boolean;
     hideIndicator?: boolean;
@@ -247,21 +263,29 @@ function ChartTooltipContent({
         <div className="grid gap-1.5">
           {payload
             .filter((item) => item.type !== "none")
-            .map((item, index) => (
-              <ChartTooltipItem
-                key={item.dataKey ?? item.name ?? index}
-                item={item}
-                index={index}
-                config={config}
-                indicator={indicator}
-                showIndicator={showIndicator}
-                nestLabel={shouldNestLabel}
-                tooltipLabel={tooltipLabel}
-                formatter={formatter}
-                color={color}
-                nameKey={nameKey}
-              />
-            ))}
+            .map((item, index) => {
+              const itemKey =
+                typeof item.dataKey === "string" ||
+                typeof item.dataKey === "number"
+                  ? item.dataKey
+                  : (item.name ?? index);
+
+              return (
+                <ChartTooltipItem
+                  key={itemKey}
+                  item={item}
+                  index={index}
+                  config={config}
+                  indicator={indicator}
+                  showIndicator={showIndicator}
+                  nestLabel={shouldNestLabel}
+                  tooltipLabel={tooltipLabel}
+                  formatter={formatter}
+                  color={color}
+                  nameKey={nameKey}
+                />
+              );
+            })}
         </div>
       </div>
     );
@@ -420,7 +444,7 @@ function ChartLegendContent({
   verticalAlign = "bottom",
   nameKey,
 }: React.ComponentProps<"div"> &
-  Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
+  Pick<DefaultLegendContentProps, "payload" | "verticalAlign"> & {
     hideIcon?: boolean;
     nameKey?: string;
   }) {
